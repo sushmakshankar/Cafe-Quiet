@@ -13,3 +13,12 @@ Café Quiet will first identify the user’s location and then search for nearby
 
 ## Setup Instructions
 **TODO**
+
+## FP 2: Midpoint Instructor Check-In
+### Technical challenges encountered:
+
+### Solutions implemented/planned:
+
+### Changes from original proposal:
+
+### Questions or areas needing instructor guidance :
