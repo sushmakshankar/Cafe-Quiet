@@ -10,7 +10,10 @@ const firebaseConfig = {
     messagingSenderId: "333469767219",
     appId: "1:333469767219:web:bcd4eb29ce4464bc113546",
     measurementId: "G-Q3CF0N3LH3"
-  };
+    apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+    authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+};
+  
 
 export const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
