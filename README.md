@@ -7,12 +7,19 @@ Welcome to Café Quiet, a Coffee Shop Occupancy Tracker! This application seeks 
 Café Quiet will first identify the user’s location and then search for nearby coffee shops. If the user does not want to provide the application with their location, they can instead search by zipcode. The application will then identify the least crowded coffee shops and display the noise level of that shop as well so that the user can make their own judgement on which café would best suit their current needs. 
 
 **Key Features:**
-- A map that populates cafés near the user’s location
+- Google Maps integration to populate and visualize cafés near the user’s location
+- Auto-detection of user location
+- Search bar to filter cafes by name
 - Café ratings and connection to view reviews
 - Updated crowd levels
 
 ## Setup Instructions
-**TODO**
+1. Clone this repository
+2. Run <code>npm install</code> to install the dependencies
+3. Set up the environment variables by creating a <code>.env</code> file and adding your Google Maps API key
+    <code>VITE_GOOGLE_MAPS_API_KEY=your_api_key_here</code>
+    Make sure that this key has access to the Maps JavaScript API and the Places API
+4. Start the development server by running <code>npm run dev</code>. Once you do this, you can visit http://localhost:5173 in your browser
 
 # React + Vite
 
