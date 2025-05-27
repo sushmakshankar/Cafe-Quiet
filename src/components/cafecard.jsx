@@ -1,12 +1,18 @@
+import { Card, Button } from 'react-bootstrap'
+import { useNavigate } from 'react-router-dom'
+
 function CafeCard({ cafe }) {
-    return (
-      <div style={{ padding: '1rem', borderBottom: '1px solid #ddd' }}>
-        <h5>{cafe.name} - {cafe.distance}</h5>
-        <p>Crowd: {cafe.crowd}</p>
-        <p>Noise Level: {cafe.noise}</p>
-      </div>
-    )
-  }
-  
-  export default CafeCard
-  
+  const navigate = useNavigate()
+
+  return (
+    <Card className="mb-3">
+      <Card.Body>
+        <Card.Title>{cafe.name}</Card.Title>
+        <Card.Text>Status: {cafe.status}</Card.Text>
+        <Button onClick={() => navigate(`/cafe/${cafe.id}`)}>Details</Button>
+      </Card.Body>
+    </Card>
+  )
+}
+
+export default CafeCard
