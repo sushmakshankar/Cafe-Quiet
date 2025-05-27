@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react'
-import { GoogleMap, LoadScript } from '@react-google-maps/api'
+import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api'
 import SearchBar from './searchbar'
 import Sidebar from './sidebar'
 import CafeCard from './CafeCard'
+
 
 export default function MapView() {
   const [cafes, setCafes] = useState([])
@@ -39,6 +40,14 @@ export default function MapView() {
     height: '400px',
     marginBottom: '1rem'
   }
+  const libraries = ['places']
+
+    const { isLoaded, loadError } = useLoadScript({
+    googleMapsApiKey: apiKey,
+    libraries
+    })
+
+
 
   return (
     <div className="d-flex">
@@ -47,15 +56,28 @@ export default function MapView() {
         <SearchBar onSearch={setSearchQuery} />
 
         {/* Google Map */}
-        <LoadScript googleMapsApiKey={apiKey}>
-          <GoogleMap
+        {loadError && <p>Error loading map</p>}
+        {!isLoaded ? (
+        <p>Loading map...</p>
+        ) : (
+        <GoogleMap
             mapContainerStyle={mapContainerStyle}
             center={center}
             zoom={14}
-          >
-            {/* You can add <Marker /> components later */}
-          </GoogleMap>
-        </LoadScript>
+        >
+            {filtered.map((cafe, i) => (
+            <Marker
+                key={i}
+                position={{
+                lat: center.lat + i * 0.005,
+                lng: center.lng + i * 0.005
+                }}
+                title={cafe.name}
+            />
+            ))}
+        </GoogleMap>
+        )}
+
 
         {/* Cafe Cards */}
         <div className="row">
