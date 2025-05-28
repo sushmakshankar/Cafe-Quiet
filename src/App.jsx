@@ -7,7 +7,6 @@ import './components/cafeQuiet.css'
 function App() {
   return (
     <Routes>
-      {/* <Route path="/" element={<Home />} /> */}
       <Route path="/" element={<MapView />} />
       <Route path="/cafe/:id" element={<CafeDetails />} />
     </Routes>

@@ -53,23 +53,22 @@ export default function MapView() {
   })
 
   return (
-    <div>
+    <div style={{height: "100%"}}>
       <NavBar onSearch={setSearchQuery} /> {}
-      <div className="d-flex height: 100%">
+      <div className="d-flex" style={{height: "85%"}}>
         <Sidebar />
-        <div className="flex-grow-1 p-3" >
+        <div className="flex-grow-1 p-3" style={{height: "100%"}} >
 
           {/* Google Map */}
           {loadError && <p>Error loading map</p>}
           {!isLoaded ? (
             <p>Loading map...</p>
           ) : (
-            <div style={{ height: "100%" }}>
-              <GoogleMap
+          <div style={{ height: "100%" }}>
+            <GoogleMap style="height: 100%"
               mapContainerStyle={mapContainerStyle}
               center={center}
-              zoom={14}
-            >
+              zoom={14} >
               {filtered.map((cafe, i) => (
               <Marker
                 key={i}
@@ -106,27 +105,27 @@ export default function MapView() {
 
 
           </div>
-          )}
+        )}
 
-          {selectedCafe && (
-            <div
-              style={{
-                position: 'absolute',
-                top: '100px',
-                left: '50%',
-                transform: 'translateX(-50%)',
-                zIndex: 1000,
-                width: '300px'
-              }}
-            >
-              <CafeCard cafe={selectedCafe} />
-              <div className="d-flex justify-content-end p-2">
-                <button className="btn btn-sm btn-secondary" onClick={() => setSelectedCafe(null)}>
-                  Close
-                </button>
-              </div>
+        {selectedCafe && (
+          <div
+            style={{
+              position: 'absolute',
+              top: '100px',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              zIndex: 1000,
+              width: '300px'
+            }}
+          >
+            <CafeCard cafe={selectedCafe} />
+            <div className="d-flex justify-content-end p-2">
+              <button className="btn btn-sm btn-secondary" onClick={() => setSelectedCafe(null)}>
+                Close
+              </button>
             </div>
-          )}
+          </div>
+        )}
 
           {/* Cafe Cards */}
           {/* <div className="row">
