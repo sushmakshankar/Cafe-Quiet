@@ -36,8 +36,12 @@ export default function MapView() {
   )
 
   const mapContainerStyle = {
+    display: 'flex',
+    direction: 'column',
     width: '100%',
-    height: '900px',
+    height: '100%',
+    // overflow: hidden,
+    // margin:auto,
     marginBottom: '1rem'
     // position: 'relative'
   }
@@ -51,16 +55,16 @@ export default function MapView() {
   return (
     <div>
       <NavBar onSearch={setSearchQuery} /> {}
-      <div className="d-flex">
+      <div className="d-flex height: 100%">
         <Sidebar />
-        <div className="flex-grow-1 p-3">
+        <div className="flex-grow-1 p-3" >
 
           {/* Google Map */}
           {loadError && <p>Error loading map</p>}
           {!isLoaded ? (
             <p>Loading map...</p>
           ) : (
-            <div style={{ position: 'relative' }}>
+            <div style={{ height: "100%" }}>
               <GoogleMap
               mapContainerStyle={mapContainerStyle}
               center={center}
