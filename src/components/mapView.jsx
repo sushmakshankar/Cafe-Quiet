@@ -7,7 +7,7 @@ import NavBar from './navBar'
 export default function MapView() {
   const [cafes, setCafes] = useState([])
   const [searchQuery, setSearchQuery] = useState('')
-  const [center, setCenter] = useState({ lat: 47.6062, lng: -122.3321 })
+  const [center, setCenter] = useState({ lat: 47.6577, lng: -122.3063 })
   const [selectedCafe, setSelectedCafe] = useState(null)
 
 
@@ -127,7 +127,7 @@ export default function MapView() {
           </div>
         )}
 
-          {/* Cafe Cards */}
+        {/* Cafe Cards */}
           {/* <div className="row">
             {filtered.map(cafe => (
               <div key={cafe.id} className="col-md-4">

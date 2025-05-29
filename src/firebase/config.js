@@ -1,6 +1,7 @@
 // taken from firebase set up, code provided to me by google's firebase set up instructions
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
+import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
     apiKey: "AIzaSyBi9BzPlq2KN9-E9qG6RYfAU2ZMp1d7BK4",
