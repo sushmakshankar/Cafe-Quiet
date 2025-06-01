@@ -1,4 +1,5 @@
 import CafeCard from './CafeCard'
+import './CafeSidebar.css';
 
 function CafeSidebar() {
   const dummyCafes = [
@@ -8,7 +9,8 @@ function CafeSidebar() {
   ]
 
   return (
-    <div style={{ width: '300px', overflowY: 'auto', borderRight: '1px solid gray' }}>
+    <div className="cafe-sidebar">
+    {/* style={{ width: '300px', overflowY: 'auto', borderRight: '1px solid gray' }}> */}
       {dummyCafes.map((cafe, index) => (
         <CafeCard key={index} cafe={cafe} />
       ))}
