@@ -6,20 +6,13 @@ import Sidebar from './sidebar'
 import CafeCard from './CafeCard'
 import NavBar from './navBar'
 
-const handleMarkerClick = async (locationId, locationName, crowdLevel) => {
-  try {
-    const locationRef = doc(db, "cafes", locationId);
-    console.log("Crowd level saved!");
-  } catch (error) {
-    console.error("Error saving crowd level:", error);
-  }
-};
-
 export default function MapView() {
   const [cafes, setCafes] = useState([])
   const [searchQuery, setSearchQuery] = useState('')
   const [center, setCenter] = useState({ lat: 47.6577, lng: -122.3063 })
   const [selectedCafe, setSelectedCafe] = useState(null)
+  const [clickCounts, setClickCounts] = useState({});
+
 
 
   const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY
@@ -46,6 +39,19 @@ export default function MapView() {
     cafe.name.toLowerCase().includes(searchQuery.toLowerCase())
   )
 
+  const handleMarkerClick = async (locationId, locationName, crowdLevel) => {
+    try {
+      const locationRef = doc(db, "cafes", locationId);
+      console.log("Crowd level saved!");
+    } catch (error) {
+      console.error("Error saving crowd level:", error);
+    }
+    setClickCounts(prevCounts => ({
+      ...prevCounts,
+      [locationId]: (prevCounts[locationId] || 0) + 1
+    }));
+  };
+
   const mapContainerStyle = {
     display: 'flex',
     direction: 'column',
@@ -63,6 +69,7 @@ export default function MapView() {
     googleMapsApiKey: apiKey,
     libraries: ['places']
   })
+  
 
   return (
     <div style={{height: "100%"}}>
@@ -88,7 +95,7 @@ export default function MapView() {
                     lat: center.lat + i * 0.005,
                     lng: center.lng + i * 0.005
                   }}
-                  title={cafe.name}
+                  title={`${cafe.name} - Clicked ${clickCounts[cafe.id] || 0} times`}
                   onClick={() => {
                     handleMarkerClick(cafe.id.toString(), cafe.name, "low");
                     setSelectedCafe(cafe);
@@ -133,7 +140,7 @@ export default function MapView() {
               width: '300px'
             }}
           >
-            <CafeCard cafe={selectedCafe} />
+            <CafeCard cafe={selectedCafe} clicks={clickCounts[selectedCafe.id] || 0} />
             <div className="d-flex justify-content-end p-2">
               <button className="btn btn-sm btn-secondary" onClick={() => setSelectedCafe(null)}>
                 Close
