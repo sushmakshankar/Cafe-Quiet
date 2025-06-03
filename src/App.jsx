@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router-dom'
-// import Home from './pages/home'
+import Home from './pages/home'
 import MapView from './components/mapView'
 import CafeDetails from './pages/CafeDetails'
 import './components/cafeQuiet.css'
@@ -7,7 +7,8 @@ import './components/cafeQuiet.css'
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<MapView />} />
+      <Route path="/" element={<Home />} />
+      <Route path="/map" element={<MapView />} />
       <Route path="/cafe/:id" element={<CafeDetails />} />
     </Routes>
   )
