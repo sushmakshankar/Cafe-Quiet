@@ -1,8 +1,19 @@
 import { useState, useEffect } from 'react'
 import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api'
+import { doc, setDoc, getDoc, updateDoc } from 'firebase/firestore';
+import { db }  from '../firebase/config';
 import Sidebar from './sidebar'
 import CafeCard from './CafeCard'
 import NavBar from './navBar'
+
+const handleMarkerClick = async (locationId, locationName, crowdLevel) => {
+  try {
+    const locationRef = doc(db, "cafes", locationId);
+    console.log("Crowd level saved!");
+  } catch (error) {
+    console.error("Error saving crowd level:", error);
+  }
+};
 
 export default function MapView() {
   const [cafes, setCafes] = useState([])
@@ -39,7 +50,8 @@ export default function MapView() {
     display: 'flex',
     direction: 'column',
     width: '100%',
-    height: '100%',
+    // height: '100%',
+    height: '100vh',
     // overflow: hidden,
     // margin:auto,
     marginBottom: '1rem'
@@ -56,7 +68,7 @@ export default function MapView() {
     <div style={{height: "100%"}}>
       <NavBar onSearch={setSearchQuery} /> {}
       <div className="d-flex" style={{height: "85%"}}>
-        <Sidebar />
+        <Sidebar cafes={filtered}/>
         <div className="flex-grow-1 p-3" style={{height: "100%"}} >
 
           {/* Google Map */}
@@ -70,15 +82,18 @@ export default function MapView() {
               center={center}
               zoom={14} >
               {filtered.map((cafe, i) => (
-              <Marker
-                key={i}
-                position={{
-                  lat: center.lat + i * 0.005,
-                  lng: center.lng + i * 0.005
-                }}
-                title={cafe.name}
-                onClick={() => setSelectedCafe(cafe)}
-              />
+                <Marker
+                  key={i}
+                  position={{
+                    lat: center.lat + i * 0.005,
+                    lng: center.lng + i * 0.005
+                  }}
+                  title={cafe.name}
+                  onClick={() => {
+                    handleMarkerClick(cafe.id.toString(), cafe.name, "low");
+                    setSelectedCafe(cafe);
+                  }}
+                />
               ))}
             </GoogleMap>
 
