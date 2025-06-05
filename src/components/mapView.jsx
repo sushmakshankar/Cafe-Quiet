@@ -28,17 +28,17 @@ export default function MapView() {
       () => console.warn('Geolocation failed or blocked.')
     )
 
-    const initialCafes = [
-      { id: 1, name: 'Cafe Solstice', status: 'Quiet' },
-      { id: 2, name: 'Ugly Mug Cafe', status: 'Moderate' },
-      { id: 3, name: 'Mr. West Cafe Bar', status: 'Busy' },
-      { id: 4, name: 'Microsoft Cafe', status: 'Quiet' }
+    const cafes = [
+      { id: 1, name: 'Cafe Solstice', status: 'Quiet', lat: 47.657438, lng: -122.313063 },
+      { id: 2, name: 'Ugly Mug Cafe', status: 'Moderate', lat: 47.659712, lng: -122.313797  },
+      { id: 3, name: 'Mr. West Cafe Bar', status: 'Busy', lat: 47.662063, lng: -122.298187  },
+      { id: 4, name: 'Microsoft Cafe', status: 'Quiet', lat: 47.653063, lng: -122.305063 }
     ];
-    setCafes(initialCafes);
+    setCafes(cafes);
 
     const fetchClickCounts = async () => {
       const clickCountsData = {};
-      for (const cafe of initialCafes) {
+      for (const cafe of cafes) {
         const docRef = doc(db, "cafes", cafe.id.toString());
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
@@ -142,10 +142,7 @@ export default function MapView() {
               {filtered.map((cafe, i) => (
                 <Marker
                   key={i}
-                  position={{
-                    lat: center.lat + i * 0.005,
-                    lng: center.lng + i * 0.005
-                  }}
+                  position={{ lat: cafe.lat, lng: cafe.lng }}
                   title={`${cafe.name} - Clicked ${clickCounts[cafe.id] || 0} times`}
                   onClick={() => {
                     handleMarkerClick(cafe.id.toString(), cafe.name, "low");
