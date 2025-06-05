@@ -28,11 +28,37 @@ export default function MapView() {
       () => console.warn('Geolocation failed or blocked.')
     )
 
-    //cafe data
-    setCafes([
-      { id: 1, name: 'Latte Lane', status: 'Quiet' },
-      { id: 2, name: 'Espresso Express', status: 'Busy' }
-    ])
+    const initialCafes = [
+      { id: 1, name: 'Cafe Solstice', status: 'Quiet' },
+      { id: 2, name: 'Ugly Mug Cafe', status: 'Moderate' },
+      { id: 3, name: 'Mr. West Cafe Bar', status: 'Busy' },
+      { id: 4, name: 'Microsoft Cafe', status: 'Quiet' }
+    ];
+    setCafes(initialCafes);
+
+    const fetchClickCounts = async () => {
+      const clickCountsData = {};
+      for (const cafe of initialCafes) {
+        const docRef = doc(db, "cafes", cafe.id.toString());
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          // const data = docSnap.data();
+          // clickCountsData[cafe.id] = data.clicks || 0;
+          clickCountsData[cafe.id] = docSnap.data().clickCount || 0;
+        // }
+        } else {
+          await setDoc(cafeRef, {
+            name: cafe.name,
+            crowdLevels: [],
+            clickCount: 0
+          });
+          // if no data exists
+          clickCountsData[cafe.id] = 0;
+        }
+      }
+      setClickCounts(clickCountsData);
+    };
+    fetchClickCounts();
   }, [])
 
   const filtered = cafes.filter(cafe =>
@@ -42,14 +68,37 @@ export default function MapView() {
   const handleMarkerClick = async (locationId, locationName, crowdLevel) => {
     try {
       const locationRef = doc(db, "cafes", locationId);
-      console.log("Crowd level saved!");
+      const docSnap = await getDoc(locationRef);
+      // console.log("Crowd level saved!");
+      let newCount = 1;
+      if (docSnap.exists()) {
+        const prevCount = docSnap.data().clickCount || 0;
+        newCount = prevCount + 1;
+  
+        await updateDoc(locationRef, {
+          clickCount: newCount,
+          // optionally add: crowdLevels: [...(docSnap.data().crowdLevels || []), crowdLevel]
+        });
+      } else {
+        await setDoc(locationRef, {
+          name: locationName,
+          clickCount: 1,
+          crowdLevels: [crowdLevel]
+        });
+      }
+    // } catch (error) {
+    //   console.error("Error saving crowd level:", error);
+    // }
+      setClickCounts(prevCounts => ({
+        ...prevCounts,
+        [locationId]: (prevCounts[locationId] || 0) + 1
+      }));
+      console.log("Click count updated to", newCount);
     } catch (error) {
-      console.error("Error saving crowd level:", error);
+      console.error("Error updating click count:", error);
     }
-    setClickCounts(prevCounts => ({
-      ...prevCounts,
-      [locationId]: (prevCounts[locationId] || 0) + 1
-    }));
+
+    setSelectedCafe(cafes.find(c => c.id === Number(locationId)) || null);
   };
 
   const mapContainerStyle = {
@@ -74,9 +123,11 @@ export default function MapView() {
   return (
     <div style={{height: "100%"}}>
       <NavBar onSearch={setSearchQuery} /> {}
-      <div className="d-flex" style={{height: "85%"}}>
+      {/* <div className="d-flex" style={{height: "85%"}}>
         <Sidebar cafes={filtered}/>
-        <div className="flex-grow-1 p-3" style={{height: "100%"}} >
+        <div className="flex-grow-1 p-3" style={{height: "100%"}} > */}
+      <div style={{ height: "85%" }}>
+        <div className="p-3" style={{ height: "100%" }}>
 
           {/* Google Map */}
           {loadError && <p>Error loading map</p>}

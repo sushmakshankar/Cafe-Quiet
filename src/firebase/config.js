@@ -12,9 +12,17 @@ const firebaseConfig = {
     appId: import.meta.env.VITE_FIREBASE_APP_ID,
     measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 };``
-  
-
 
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 export const db = getFirestore(app);
+
+export const addClickToFirebase = async (cafeId, clicks) => {
+    try {
+        const cafeRef = doc(db, "cafes", cafeId);
+        await updateDoc(cafeRef, { clicks: clicks });
+        console.log("Click count updated successfully");
+    } catch (error) {
+        console.error("Error updating click count:", error);
+    }
+}
