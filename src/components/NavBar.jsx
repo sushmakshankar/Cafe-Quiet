@@ -2,7 +2,7 @@ import { Container, Form, FormControl, Navbar as BootstrapNavbar } from 'react-b
 
 export default function NavBar({ onSearch }) {
   return (
-    <BootstrapNavbar bg="light" expand="lg" className="mb-3">
+    <BootstrapNavbar bg="light" expand="lg" className="mb-0">
       <Container>
         <BootstrapNavbar.Brand href="/">Café Quiet</BootstrapNavbar.Brand>
         <Form className="d-flex ms-auto">

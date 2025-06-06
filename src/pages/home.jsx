@@ -22,13 +22,3 @@ function HomePage() {
 }
 
 export default HomePage
-
-// export default function Home() {
-//     return (
-//       <div>
-//         <h1>Nearby Cafes</h1>
-//         {/* Your MapView, SearchBar, Sidebar etc. go here */}
-//       </div>
-//     );
-//   }
-  

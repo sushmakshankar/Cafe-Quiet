@@ -42,12 +42,9 @@ export default function MapView() {
         const docRef = doc(db, "cafes", cafe.id.toString());
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
-          // const data = docSnap.data();
-          // clickCountsData[cafe.id] = data.clicks || 0;
           clickCountsData[cafe.id] = docSnap.data().clickCount || 0;
-        // }
         } else {
-          await setDoc(cafeRef, {
+          await setDoc(docRef, {
             name: cafe.name,
             crowdLevels: [],
             clickCount: 0
@@ -69,15 +66,12 @@ export default function MapView() {
     try {
       const locationRef = doc(db, "cafes", locationId);
       const docSnap = await getDoc(locationRef);
-      // console.log("Crowd level saved!");
       let newCount = 1;
       if (docSnap.exists()) {
         const prevCount = docSnap.data().clickCount || 0;
         newCount = prevCount + 1;
-  
         await updateDoc(locationRef, {
           clickCount: newCount,
-          // optionally add: crowdLevels: [...(docSnap.data().crowdLevels || []), crowdLevel]
         });
       } else {
         await setDoc(locationRef, {
@@ -86,9 +80,6 @@ export default function MapView() {
           crowdLevels: [crowdLevel]
         });
       }
-    // } catch (error) {
-    //   console.error("Error saving crowd level:", error);
-    // }
       setClickCounts(prevCounts => ({
         ...prevCounts,
         [locationId]: (prevCounts[locationId] || 0) + 1
@@ -102,15 +93,8 @@ export default function MapView() {
   };
 
   const mapContainerStyle = {
-    display: 'flex',
-    direction: 'column',
     width: '100%',
-    // height: '100%',
-    height: '100vh',
-    // overflow: hidden,
-    // margin:auto,
-    marginBottom: '1rem'
-    // position: 'relative'
+    height: '100%'
   }
 
 
@@ -121,24 +105,23 @@ export default function MapView() {
   
 
   return (
-    <div style={{height: "100%"}}>
-      <NavBar onSearch={setSearchQuery} /> {}
-      {/* <div className="d-flex" style={{height: "85%"}}>
-        <Sidebar cafes={filtered}/>
-        <div className="flex-grow-1 p-3" style={{height: "100%"}} > */}
-      <div style={{ height: "85%" }}>
-        <div className="p-3" style={{ height: "100%" }}>
-
+    // <div style={{ height: "100%", width: "100%", margin: 0, padding: 0 }}>
+    <div style={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>
+      <NavBar onSearch={setSearchQuery} />
+      <div style={{ flexGrow: 1, position: 'relative' }}>
+        <div className="p-0" style={{ height: "100%" }}>
           {/* Google Map */}
           {loadError && <p>Error loading map</p>}
           {!isLoaded ? (
             <p>Loading map...</p>
           ) : (
-          <div style={{ height: "100%" }}>
-            <GoogleMap style="height: 100%"
-              mapContainerStyle={mapContainerStyle}
+            // <GoogleMap style="height: 100%"
+            <GoogleMap
+              // mapContainerStyle={mapContainerStyle}
+              mapContainerStyle={{ width: '100%', height: '100%' }}
               center={center}
-              zoom={14} >
+              zoom={14} 
+            >
               {filtered.map((cafe, i) => (
                 <Marker
                   key={i}
@@ -151,31 +134,7 @@ export default function MapView() {
                 />
               ))}
             </GoogleMap>
-
-            {/* overlay */}
-            {/* {selectedCafe && (
-              <div
-                style={{
-                  position: 'absolute',
-                  top: '100px',
-                  left: '50%',
-                  transform: 'translateX(-50%)',
-                  zIndex: 1000,
-                  width: '300px'
-                }}
-              >
-                <CafeCard cafe={selectedCafe} />
-                <div className="d-flex justify-content-end p-2">
-                  <button className="btn btn-sm btn-secondary" onClick={() => setSelectedCafe(null)}>
-                    Close
-                  </button>
-                </div>
-              </div>
-            )} */}
-
-
-          </div>
-        )}
+          )}
 
         {selectedCafe && (
           <div
@@ -196,17 +155,8 @@ export default function MapView() {
             </div>
           </div>
         )}
-
-        {/* Cafe Cards */}
-          {/* <div className="row">
-            {filtered.map(cafe => (
-              <div key={cafe.id} className="col-md-4">
-                <CafeCard cafe={cafe} />
-              </div>
-            ))}
-          </div> */}
         </div>
       </div>
     </div>
-  )
+  );
 }
