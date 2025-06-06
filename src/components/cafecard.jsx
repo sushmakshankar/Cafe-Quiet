@@ -8,7 +8,7 @@ function CafeCard({ cafe, clicks }) {
     <Card className="mb-1">
       <Card.Body>
         <Card.Title>{cafe.name}</Card.Title>
-        <Card.Text>Status: {cafe.status}</Card.Text>
+        <Card.Text>Crowd Level: {cafe.status}</Card.Text>
         <Card.Text>Number of Café Quiet Customers Visited: {clicks}</Card.Text>
         <Button onClick={() => navigate(`/cafe/${cafe.id}`)}>Details</Button>
       </Card.Body>
