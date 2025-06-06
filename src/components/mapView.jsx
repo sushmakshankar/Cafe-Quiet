@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react'
 import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api'
 import { doc, setDoc, getDoc, updateDoc } from 'firebase/firestore';
 import { db }  from '../firebase/config';
+// import { useNavigate } from 'react-router-dom'
+
 // import Sidebar from './sidebar'
 import CafeCard from './CafeCard'
 import NavBar from './navBar'
@@ -13,6 +15,8 @@ export default function MapView() {
   const [selectedCafe, setSelectedCafe] = useState(null)
   const [clickCounts, setClickCounts] = useState({});
   const [filterPins, setFilterPins] = useState(false);
+  // const navigate = useNavigate()
+
 
 
   const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY
@@ -178,8 +182,10 @@ export default function MapView() {
               }}
             >
               X
+              
             </button>
             <CafeCard cafe={selectedCafe} clicks={clickCounts[selectedCafe.id] || 0} />
+           
           </div>
           // </div>
         )}
