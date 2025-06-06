@@ -19,7 +19,7 @@ export default function NavBar({ onSearch, filterPins, onTogglePins }) {
         </Form>
 
         <Button
-          variant="outline-primary"
+          variant="outline-success"
           size="sm"
           onClick={onTogglePins}
         >
