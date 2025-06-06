@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api'
 import { doc, setDoc, getDoc, updateDoc } from 'firebase/firestore';
 import { db }  from '../firebase/config';
-import Sidebar from './sidebar'
+// import Sidebar from './sidebar'
 import CafeCard from './CafeCard'
 import NavBar from './navBar'
 

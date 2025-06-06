@@ -56,15 +56,13 @@ Café Quiet will first identify the user’s location and then search for nearby
     - Increments a "click count" stored in Firebase
 
 ## API Documentation
-**Google Maps JavaScript API**
-
+### Google Maps JavaScript API
 Used to:
 - Render interactive maps
 - Display markers for cafes
 - Use Geolocation and Places libraries
 
-**Firebase Firestore**
-
+### Firebase Firestore
 Firestore stores a collection called cafes, where each document includes:
 - <code>id</code>: Unique identifier
 - <code>name</code>: Cafe name
