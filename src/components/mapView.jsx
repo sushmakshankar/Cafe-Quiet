@@ -12,7 +12,7 @@ export default function MapView() {
   const [center, setCenter] = useState({ lat: 47.6577, lng: -122.3063 })
   const [selectedCafe, setSelectedCafe] = useState(null)
   const [clickCounts, setClickCounts] = useState({});
-
+  const [filterPins, setFilterPins] = useState(false);
 
 
   const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY
@@ -62,6 +62,13 @@ export default function MapView() {
     cafe.name.toLowerCase().includes(searchQuery.toLowerCase())
   )
 
+  const visibleCafes = filterPins
+    ? cafes.filter(cafe =>
+        cafe.name.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    : cafes;
+
+
   const handleMarkerClick = async (locationId, locationName, crowdLevel) => {
     try {
       const locationRef = doc(db, "cafes", locationId);
@@ -107,7 +114,13 @@ export default function MapView() {
   return (
     // <div style={{ height: "100%", width: "100%", margin: 0, padding: 0 }}>
     <div style={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>
-      <NavBar onSearch={setSearchQuery} />
+      {/* <NavBar onSearch={setSearchQuery} /> */}
+      <NavBar
+        onSearch={setSearchQuery}
+        filterPins={filterPins}
+        onTogglePins={() => setFilterPins(prev => !prev)}
+      />
+
       <div style={{ flexGrow: 1, position: 'relative' }}>
         <div className="p-0" style={{ height: "100%" }}>
           {/* Google Map */}
@@ -122,7 +135,8 @@ export default function MapView() {
               center={center}
               zoom={14} 
             >
-              {filtered.map((cafe, i) => (
+              {/* {filtered.map((cafe, i) => ( */}
+              {visibleCafes.map((cafe, i) => (
                 <Marker
                   key={i}
                   position={{ lat: cafe.lat, lng: cafe.lng }}
@@ -133,6 +147,7 @@ export default function MapView() {
                   }}
                 />
               ))}
+
             </GoogleMap>
           )}
 
@@ -144,16 +159,29 @@ export default function MapView() {
               left: '50%',
               transform: 'translateX(-50%)',
               zIndex: 1000,
-              width: '300px'
+              width: '300px',
+              backgroundColor: 'white',
+              borderRadius: '8px',
+              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+              overflow: 'hidden'
             }}
           >
+            {/* <CafeCard cafe={selectedCafe} clicks={clickCounts[selectedCafe.id] || 0} /> */}
+            <button 
+              className="btn btn-sm btn-secondary" 
+              onClick={() => setSelectedCafe(null)}
+              style={{
+                position: 'absolute',
+                top: '8px',
+                right: '8px',
+                zIndex: 10
+              }}
+            >
+              X
+            </button>
             <CafeCard cafe={selectedCafe} clicks={clickCounts[selectedCafe.id] || 0} />
-            <div className="d-flex justify-content-end p-2">
-              <button className="btn btn-sm btn-secondary" onClick={() => setSelectedCafe(null)}>
-                Close
-              </button>
-            </div>
           </div>
+          // </div>
         )}
         </div>
       </div>

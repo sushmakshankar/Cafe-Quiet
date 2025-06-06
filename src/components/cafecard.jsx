@@ -5,7 +5,7 @@ function CafeCard({ cafe, clicks }) {
   const navigate = useNavigate()
 
   return (
-    <Card className="mb-3">
+    <Card className="mb-1">
       <Card.Body>
         <Card.Title>{cafe.name}</Card.Title>
         <Card.Text>Status: {cafe.status}</Card.Text>

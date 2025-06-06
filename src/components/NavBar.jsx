@@ -1,10 +1,14 @@
-import { Container, Form, FormControl, Navbar as BootstrapNavbar } from 'react-bootstrap'
+import { Container, Form, FormControl, Navbar as BootstrapNavbar, Button } from 'react-bootstrap';
 
-export default function NavBar({ onSearch }) {
+
+export default function NavBar({ onSearch, filterPins, onTogglePins }) {
   return (
     <BootstrapNavbar bg="light" expand="lg" className="mb-0">
       <Container>
-        <BootstrapNavbar.Brand href="/">Café Quiet</BootstrapNavbar.Brand>
+        <BootstrapNavbar.Brand href="/"className="fs-3 fw-bold">
+          Café Quiet
+        </BootstrapNavbar.Brand>
+
         <Form className="d-flex ms-auto">
           <FormControl
             type="search"
@@ -13,6 +17,15 @@ export default function NavBar({ onSearch }) {
             onChange={(e) => onSearch(e.target.value)}
           />
         </Form>
+
+        <Button
+          variant="outline-primary"
+          size="sm"
+          onClick={onTogglePins}
+        >
+          {filterPins ? "Show All Pins" : "Filter Pins by Search"}
+        </Button>
+
       </Container>
     </BootstrapNavbar>
   )
