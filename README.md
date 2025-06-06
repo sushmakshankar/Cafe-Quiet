@@ -30,7 +30,7 @@ Café Quiet will first identify the user’s location and then search for nearby
     <code>VITE_GOOGLE_MAPS_API_KEY=your_api_key_here</code>
     Make sure that this key has access to the Maps JavaScript API and the Places API
 4. Configure Firebase project within Firestore using the instructions provided, then create a <code>firebase/config.js</code> with the following configuration:
-    <code>import { initializeApp } from "firebase/app";
+    ```import { initializeApp } from "firebase/app";
             import { getFirestore } from "firebase/firestore";
 
             const firebaseConfig = {
@@ -43,8 +43,7 @@ Café Quiet will first identify the user’s location and then search for nearby
             };
 
             const app = initializeApp(firebaseConfig);
-            export const db = getFirestore(app);
-    </code>
+            export const db = getFirestore(app);```
 5. Start the development server by running <code>npm run dev</code>. Once you do this, you can visit http://localhost:5173 in your browser
 
 ## Usage Guidelines
