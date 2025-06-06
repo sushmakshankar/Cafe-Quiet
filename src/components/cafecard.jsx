@@ -9,8 +9,8 @@ function CafeCard({ cafe, clicks }) {
     <Card className="mb-3 cafe-quiet shadow-sm rounded">
       <Card.Body>
         <Card.Title className="display-7 fw-bold">{cafe.name}</Card.Title>
-        <Card.Text className="lead">Crowd Level: {cafe.status}</Card.Text>
-        <Card.Text className="lead">Number of Café Quiet Customers Visited: {clicks}</Card.Text>
+        <Card.Text className="lead"> <strong>Crowd Level</strong>: {cafe.status}</Card.Text>
+        <Card.Text className="lead"> <strong>Number of Café Quiet Customers Visited</strong>: {clicks}</Card.Text>
         <Button 
           variant="success" 
           size ="lg"
