@@ -5,12 +5,19 @@ function CafeCard({ cafe, clicks }) {
   const navigate = useNavigate()
 
   return (
-    <Card className="mb-1">
+    // <Card className="mb-1">
+    <Card className="mb-3 cafe-quiet shadow-sm rounded">
       <Card.Body>
-        <Card.Title>{cafe.name}</Card.Title>
-        <Card.Text>Crowd Level: {cafe.status}</Card.Text>
-        <Card.Text>Number of Café Quiet Customers Visited: {clicks}</Card.Text>
-        <Button onClick={() => navigate(`/cafe/${cafe.id}`)}>Details</Button>
+        <Card.Title className="display-7 fw-bold">{cafe.name}</Card.Title>
+        <Card.Text className="lead">Crowd Level: {cafe.status}</Card.Text>
+        <Card.Text className="lead">Number of Café Quiet Customers Visited: {clicks}</Card.Text>
+        <Button 
+          variant="success" 
+          size ="lg"
+          className="rounded-pill shadow-sm"
+          onClick={() => navigate(`/cafe/${cafe.id}`)}>
+          Details
+        </Button>
       </Card.Body>
     </Card>
   )
