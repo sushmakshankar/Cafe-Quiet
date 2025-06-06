@@ -49,8 +49,25 @@ Café Quiet will first identify the user’s location and then search for nearby
 5. Start the development server by running <code>npm run dev</code>. Once you do this, you can visit http://localhost:5173 in your browser
 
 ## Usage Guidelines
+- On load, the map centers on the user's current location.
+- Cafe markers are displayed on the map.
+- Clicking a marker:
+    - Opens a popup with cafe details
+    - Increments a "click count" stored in Firebase
 
 ## API Documentation
+**Google Maps JavaScript API**
+Used to:
+- Render interactive maps
+- Display markers for cafes
+- Use Geolocation and Places libraries
+
+**Firebase Firestore**
+Firestore stores a collection called cafes, where each document includes:
+- <code>id</code>: Unique identifier
+- <code>name</code>: Cafe name
+- <code>clickCount</code>: Number of times clicked
+- <code>crowdLevels</code>: Array of recorded user crowd observations
 
 ## Future Enhancements and Known Issues
 If I was to continue working on this project in the future, I want to achieve the following:
